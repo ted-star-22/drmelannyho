@@ -10,7 +10,7 @@
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Dr Melanny Ho — GP in Essendon, Melbourne">
-<meta property="og:description" content="Thorough care, explained clearly. Evidence-based general practice for all ages in Essendon, VIC.">
+<meta property="og:description" content="Empathetic & thorough care. Evidence-based general practice for all ages in Essendon, VIC.">
 <meta property="og:image" content="https://framerusercontent.com/images/o58fFff7SlDvrw0tR8voxEQSnzI.jpeg?scale-down-to=1024">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%230F6B6B'/%3E%3Ctext x='16' y='21' font-family='Arial,Helvetica,sans-serif' font-size='13' font-weight='700' fill='%23fff' text-anchor='middle' letter-spacing='-0.5'%3EMH%3C/text%3E%3C/svg%3E">
@@ -123,9 +123,14 @@
   .nav-toggle svg { width: 20px; height: 20px; }
 
   /* ---------- hero ---------- */
-  .hero { background: linear-gradient(180deg, #F4F8F8 0%, #FFFFFF 100%); }
+  .hero { background: linear-gradient(180deg, #C9DDD7 0%, #E8F1EE 100%); }
   .hero .wrap { padding-top: 76px; padding-bottom: 0; }
-  .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .hero-grid {
+    display: grid; grid-template-columns: 1fr 1fr; column-gap: 60px; align-items: center;
+    grid-template-areas: "head media" "copy media" "creds media";
+  }
+  .hero-head { grid-area: head; }
+  .hero-copy { grid-area: copy; }
 
   .badge {
     display: inline-flex; align-items: center; gap: 8px;
@@ -138,12 +143,12 @@
   .hero-lead { font-size: 18px; line-height: 1.6; color: var(--muted-2); margin: 22px 0 0; max-width: 470px; text-wrap: pretty; }
   .hero-actions { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
 
-  .creds { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line-strong); border: 1px solid var(--line-strong); border-radius: 14px; overflow: hidden; margin-top: 46px; }
+  .creds { grid-area: creds; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line-strong); border: 1px solid var(--line-strong); border-radius: 14px; overflow: hidden; margin-top: 46px; }
   .cred { background: #fff; padding: 18px 16px; }
   .cred-t { font-size: 21px; font-weight: 700; letter-spacing: -.02em; }
   .cred-s { font-size: 12px; color: var(--muted-3); margin-top: 4px; }
 
-  .hero-media { position: relative; align-self: end; }
+  .hero-media { grid-area: media; position: relative; align-self: end; }
   .hero-media__bg { position: absolute; inset: 22px 0 0 0; background: var(--teal-tint); border-radius: 20px; }
   .hero-media__frame { position: relative; border-radius: 20px 20px 0 0; overflow: hidden; height: 520px; margin: 0 24px; }
   .hero-media__frame img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; display: block; }
@@ -256,8 +261,11 @@
   /* ---------- responsive ---------- */
   @media (max-width: 960px) {
     .hero-grid, .story-grid, .visit-grid, .faq-grid { grid-template-columns: 1fr; gap: 40px; }
+    /* hero stacks: headline → image → intro → credentials */
+    .hero-grid { grid-template-areas: "head" "media" "copy" "creds"; }
     .hero .wrap { padding-bottom: 0; }
-    .hero-media { max-width: 460px; }
+    .creds { margin-top: 0; }
+    .hero-media { max-width: 460px; justify-self: center; align-self: center; }
     .care-grid { grid-template-columns: repeat(2, 1fr); }
     .cta-row { flex-direction: column; align-items: flex-start; }
   }
@@ -275,12 +283,61 @@
     .section-pad { padding-top: 64px; padding-bottom: 56px; }
     .care-grid { grid-template-columns: 1fr; }
     .creds { grid-template-columns: 1fr; }
+    /* mobile hero: headline above a shorter photo, consulting days centred below it */
+    .hero .wrap { padding-top: 32px; }
+    .hero-grid { grid-template-areas: "head" "media" "copy" "creds"; }
     .hero h1 { margin-top: 20px; }
-    .hero-media { margin: 0 auto; }
+    .hero-lead { margin-top: 0; }
+    .hero-media { width: 100%; max-width: 480px; margin: 0 auto; justify-self: stretch; }
+    .hero-media__bg { display: none; }
+    .hero-media__frame { height: 300px; border-radius: 20px; margin: 0; }
+    .hero-media__frame img { object-position: 50% 20%; }
+    .days-card { position: static; width: max-content; max-width: 100%; margin: 16px auto 0; }
   }
   @media (max-width: 420px) {
     .tile-grid { grid-template-columns: 1fr; }
     .btn--nav span.book-long { display: none; }
+  }
+
+  /* ---------- notice modal ---------- */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: center; padding: 24px;
+    background: rgba(18,36,44,.55); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    opacity: 0; visibility: hidden; transition: opacity .3s ease, visibility .3s ease;
+  }
+  .modal-overlay.is-open { opacity: 1; visibility: visible; }
+  .modal {
+    position: relative; background: #fff; color: var(--ink);
+    width: 100%; max-width: 440px; border-radius: 20px; padding: 34px 30px 28px;
+    box-shadow: 0 30px 70px rgba(18,36,44,.32);
+    transform: translateY(12px) scale(.98); transition: transform .3s cubic-bezier(.2,.7,.3,1);
+  }
+  .modal-overlay.is-open .modal { transform: none; }
+  .modal__badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--teal-tint); color: var(--teal-dark);
+    padding: 6px 12px; border-radius: 999px; font-size: 11.5px; font-weight: 700;
+    letter-spacing: .06em; text-transform: uppercase;
+  }
+  .modal__dot { width: 7px; height: 7px; border-radius: 50%; background: #D9A441; flex: 0 0 auto; }
+  .modal h2 { font-size: 25px; font-weight: 700; letter-spacing: -.02em; margin-top: 16px; line-height: 1.14; }
+  .modal p { font-size: 15.5px; line-height: 1.62; color: var(--muted); margin: 12px 0 0; }
+  .modal__actions { display: flex; gap: 10px; margin-top: 26px; flex-wrap: wrap; }
+  .btn--teal { flex: 1 1 auto; background: var(--teal); color: #fff; padding: 14px 20px; font-size: 15px; border-radius: 12px; }
+  .btn--teal:hover { background: var(--teal-dark); }
+  .btn--soft { flex: 1 1 auto; background: var(--bg-panel); color: var(--ink); padding: 14px 20px; font-size: 15px; border-radius: 12px; }
+  .btn--soft:hover { background: #E3EAEA; }
+  .modal__close {
+    position: absolute; top: 14px; right: 14px; width: 34px; height: 34px;
+    border: none; background: none; cursor: pointer; border-radius: 50%; color: var(--muted-3);
+    display: flex; align-items: center; justify-content: center; transition: background .2s ease, color .2s ease;
+  }
+  .modal__close:hover { background: var(--bg-panel); color: var(--ink); }
+  .modal__close svg { width: 18px; height: 18px; }
+  @media (prefers-reduced-motion: reduce) {
+    .modal-overlay, .modal { transition: opacity .2s ease, visibility .2s ease; }
+    .modal { transform: none; }
   }
 </style>
 </head>
@@ -289,7 +346,7 @@
 <!-- ============================ HEADER ============================ -->
 <header class="site-header">
   <div class="wrap">
-    <a class="brand" href="#top" aria-label="Dr Melanny Ho — home">
+    <a class="brand" href="#home" aria-label="Dr Melanny Ho — home">
       <span class="brand-mark">MH</span>
       <span>
         <span class="brand-name">Dr Melanny Ho</span><br>
@@ -298,7 +355,7 @@
     </a>
     <nav class="nav" aria-label="Primary">
       <div class="nav-links" id="navLinks">
-        <a href="#care">Care</a>
+        <a href="#care">Services</a>
         <a href="#about">About</a>
         <a href="#visit">Visit</a>
       </div>
@@ -313,24 +370,15 @@
 <main id="top">
 
   <!-- ============================ HERO ============================ -->
-  <section class="hero" aria-label="Introduction">
+  <section class="hero" id="home" aria-label="Introduction">
     <div class="wrap">
       <div class="hero-grid">
-        <div>
+        <div class="hero-head">
           <div class="badge" data-reveal>
             <span class="status-dot" id="statusDot"></span>
             <span id="statusText">Checking clinic hours…</span>
           </div>
-          <h1 data-reveal>Thorough care,<br>explained clearly.</h1>
-          <p class="hero-lead" data-reveal>Dr Melanny Ho is a Melbourne GP practising in Essendon — evidence-based general practice for all ages, with expertise in women's health, children's health, mental health and LGBTQIA+ health.</p>
-          <div class="hero-actions" data-reveal>
-            <a class="btn btn--dark" href="https://www.hotdoc.com.au/medical-centres/essendon-VIC-3040/sia-essendon-medical-centre/doctors/dr-melanny-ho-3" target="_blank" rel="noopener">Book on HotDoc</a>
-          </div>
-          <div class="creds" data-reveal>
-            <div class="cred"><div class="cred-t">MBBS (Hons)</div><div class="cred-s">Monash University</div></div>
-            <div class="cred"><div class="cred-t">FRACGP</div><div class="cred-s">RACGP Fellowship</div></div>
-            <div class="cred"><div class="cred-t">Dip. Child Health</div><div class="cred-s">Paediatric training</div></div>
-          </div>
+          <h1 data-reveal>Empathetic &amp; thorough care.</h1>
         </div>
         <div class="hero-media" data-reveal>
           <div class="hero-media__bg"></div>
@@ -347,6 +395,17 @@
               <span class="day">F</span>
             </div>
           </div>
+        </div>
+        <div class="hero-copy">
+          <p class="hero-lead" data-reveal>Dr Melanny Ho is a Melbourne GP practising in Essendon — evidence-based general practice for all ages, with expertise in women's health, children's health, mental health and LGBTQIA+ health.</p>
+          <div class="hero-actions" data-reveal>
+            <a class="btn btn--dark" href="https://www.hotdoc.com.au/medical-centres/essendon-VIC-3040/sia-essendon-medical-centre/doctors/dr-melanny-ho-3" target="_blank" rel="noopener">Book on HotDoc</a>
+          </div>
+        </div>
+        <div class="creds" data-reveal>
+          <div class="cred"><div class="cred-t">MBBS (Hons)</div><div class="cred-s">Monash University</div></div>
+          <div class="cred"><div class="cred-t">FRACGP</div><div class="cred-s">RACGP Fellowship</div></div>
+          <div class="cred"><div class="cred-t">Dip. Child Health</div><div class="cred-s">Paediatric training</div></div>
         </div>
       </div>
     </div>
@@ -387,7 +446,7 @@
           <div class="service__img"><img src="https://framerusercontent.com/images/hHi1I4t8pnQzapp9yk0KQdkRxTI.jpeg" alt="" loading="lazy"></div>
           <div class="service__body"><div class="service__tag">Women</div><h3>Contraception</h3><p>All options discussed, including IUD and Implanon insertion and removal.</p></div>
         </article>
-        <article class="service" data-cat="family" data-reveal>
+        <article class="service" data-cat="family women" data-reveal>
           <div class="service__img"><img src="https://framerusercontent.com/images/OObLzHELZluARjefS6C0HqHvzDQ.jpeg?scale-down-to=1024" alt="" loading="lazy"></div>
           <div class="service__body"><div class="service__tag">Families</div><h3>Family Planning</h3><p>First-pregnancy appointments, options discussed openly, comprehensive antenatal care.</p></div>
         </article>
@@ -522,6 +581,22 @@
 
 </main>
 
+<!-- ============================ MATERNITY-LEAVE NOTICE ============================ -->
+<div class="modal-overlay" id="noticeModal" role="dialog" aria-modal="true" aria-labelledby="noticeTitle" aria-describedby="noticeBody" hidden>
+  <div class="modal">
+    <button class="modal__close" id="noticeClose" type="button" aria-label="Close notice">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <span class="modal__badge"><span class="modal__dot"></span>Clinic update</span>
+    <h2 id="noticeTitle">Dr Ho is on maternity leave</h2>
+    <p id="noticeBody">Dr Melanny Ho is on maternity leave from November 2026 and expects to return before mid-2027. For appointments in the meantime, SIA Medical Centre Essendon can help — please call the clinic.</p>
+    <div class="modal__actions">
+      <a class="btn btn--teal" href="tel:+61393741322">Call the clinic</a>
+      <button class="btn btn--soft" id="noticeDismiss" type="button">Got it</button>
+    </div>
+  </div>
+</div>
+
 <script>
 (function () {
   "use strict";
@@ -552,18 +627,33 @@
   /* ---------- mobile nav ---------- */
   var navToggle = document.getElementById("navToggle");
   var navLinks = document.getElementById("navLinks");
+  var siteHeader = document.querySelector(".site-header");
+  function closeMenu() {
+    if (navLinks) navLinks.classList.remove("is-open");
+    if (navToggle) navToggle.setAttribute("aria-expanded", "false");
+  }
   if (navToggle && navLinks) {
     navToggle.addEventListener("click", function () {
       var open = navLinks.classList.toggle("is-open");
       navToggle.setAttribute("aria-expanded", open ? "true" : "false");
     });
-    navLinks.addEventListener("click", function (e) {
-      if (e.target.tagName === "A") {
-        navLinks.classList.remove("is-open");
-        navToggle.setAttribute("aria-expanded", "false");
-      }
-    });
   }
+
+  /* ---------- in-page smooth scroll (offsets the sticky header; logo → hero) ---------- */
+  var prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  Array.prototype.forEach.call(document.querySelectorAll('a[href^="#"]'), function (link) {
+    link.addEventListener("click", function (e) {
+      var hash = link.getAttribute("href");
+      if (!hash || hash === "#") return;
+      var target = document.getElementById(hash.slice(1));
+      if (!target) return;
+      e.preventDefault();
+      closeMenu();
+      var headerH = siteHeader ? siteHeader.offsetHeight : 0;
+      var y = (hash === "#home") ? 0 : (target.getBoundingClientRect().top + window.pageYOffset - headerH - 8);
+      window.scrollTo({ top: Math.max(0, y), behavior: prefersReduced ? "auto" : "smooth" });
+    });
+  });
 
   /* ---------- filterable care grid ---------- */
   var chips = document.getElementById("chips");
@@ -577,7 +667,8 @@
       chips.querySelectorAll(".chip").forEach(function (c) { c.classList.toggle("is-active", c === btn); });
       var shown = 0;
       careGrid.querySelectorAll(".service").forEach(function (card) {
-        var match = filter === "everything" || card.getAttribute("data-cat") === filter;
+        var cats = (card.getAttribute("data-cat") || "").split(/\s+/);
+        var match = filter === "everything" || cats.indexOf(filter) !== -1;
         card.classList.toggle("is-hidden", !match);
         if (match) shown++;
       });
@@ -632,6 +723,55 @@
     }, { rootMargin: "0px 0px -8% 0px", threshold: 0.06 });
     nodes.forEach(function (n) { io.observe(n); });
     setTimeout(function () { nodes.forEach(function (n) { if (n.classList.contains("reveal-init")) show(n, 0); }); }, 4000);
+  }
+
+  /* ---------- maternity-leave notice modal (once per session) ---------- */
+  var modal = document.getElementById("noticeModal");
+  if (modal) {
+    var STORAGE_KEY = "mh-notice-maternity-2026";
+    var lastFocused = null;
+
+    function focusable() {
+      return modal.querySelectorAll('a[href], button:not([disabled])');
+    }
+    function onKey(e) {
+      if (e.key === "Escape") { closeModal(); return; }
+      if (e.key === "Tab") {
+        var f = focusable();
+        if (!f.length) return;
+        var first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    }
+    function openModal() {
+      lastFocused = document.activeElement;
+      modal.hidden = false;
+      void modal.offsetWidth; // reflow so the transition runs
+      modal.classList.add("is-open");
+      var btn = document.getElementById("noticeDismiss");
+      if (btn) btn.focus();
+      document.addEventListener("keydown", onKey);
+    }
+    function closeModal() {
+      modal.classList.remove("is-open");
+      document.removeEventListener("keydown", onKey);
+      try { sessionStorage.setItem(STORAGE_KEY, "1"); } catch (e) {}
+      var hide = function () { modal.hidden = true; modal.removeEventListener("transitionend", hide); };
+      modal.addEventListener("transitionend", hide);
+      setTimeout(hide, 400); // fallback if no transition fires
+      if (lastFocused && lastFocused.focus) lastFocused.focus();
+    }
+
+    var cl = document.getElementById("noticeClose");
+    var ds = document.getElementById("noticeDismiss");
+    if (cl) cl.addEventListener("click", closeModal);
+    if (ds) ds.addEventListener("click", closeModal);
+    modal.addEventListener("click", function (e) { if (e.target === modal) closeModal(); });
+
+    var seen = false;
+    try { seen = sessionStorage.getItem(STORAGE_KEY) === "1"; } catch (e) {}
+    if (!seen) setTimeout(openModal, 700);
   }
 })();
 </script>
