@@ -157,6 +157,8 @@
     border-radius: 14px; padding: 14px 18px; box-shadow: 0 12px 30px rgba(18,36,44,.1);
   }
   .days-card__label { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted-3); font-weight: 700; }
+  .days-card__leave { font-size: 15px; font-weight: 700; letter-spacing: -.01em; margin-top: 8px; line-height: 1.3; }
+  .days-card__leave span { display: block; font-size: 12.5px; font-weight: 500; color: var(--muted-3); margin-top: 3px; }
   .days { display: flex; gap: 6px; margin-top: 10px; }
   .day {
     width: 30px; height: 30px; border-radius: 8px; font-size: 12px; font-weight: 700;
@@ -223,6 +225,7 @@
   .visit-card a.phone:hover { text-decoration: underline; }
   .hours-row { display: flex; justify-content: space-between; font-size: 15px; }
   .hours-row span.on { color: var(--teal); font-weight: 600; }
+  .hours-row span.off { color: var(--muted-3); font-weight: 600; }
   .map-frame { border-radius: 18px; overflow: hidden; border: 1px solid var(--line); min-height: 420px; }
   .map-frame iframe { width: 100%; height: 100%; min-height: 420px; border: 0; display: block; filter: grayscale(.35); }
 
@@ -359,7 +362,7 @@
         <a href="#about">About</a>
         <a href="#visit">Visit</a>
       </div>
-      <a class="btn btn--nav" href="https://www.hotdoc.com.au/medical-centres/essendon-VIC-3040/sia-essendon-medical-centre/doctors/dr-melanny-ho-3" target="_blank" rel="noopener">Book<span class="book-long">&nbsp;now</span></a>
+      <a class="btn btn--nav" href="tel:+61393741322">Call<span class="book-long">&nbsp;clinic</span></a>
       <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
@@ -386,20 +389,14 @@
             <img src="https://framerusercontent.com/images/o58fFff7SlDvrw0tR8voxEQSnzI.jpeg?scale-down-to=1024" alt="Portrait of Dr Melanny Ho">
           </div>
           <div class="days-card">
-            <div class="days-card__label">Consulting days</div>
-            <div class="days">
-              <span class="day">M</span>
-              <span class="day">T</span>
-              <span class="day">W</span>
-              <span class="day day--off">T</span>
-              <span class="day">F</span>
-            </div>
+            <div class="days-card__label">Availability</div>
+            <div class="days-card__leave">On maternity leave<span>Returning before mid-2027</span></div>
           </div>
         </div>
         <div class="hero-copy">
           <p class="hero-lead" data-reveal>Dr Melanny Ho is a Melbourne GP practising in Essendon — evidence-based general practice for all ages, with expertise in women's health, children's health, mental health and LGBTQIA+ health.</p>
           <div class="hero-actions" data-reveal>
-            <a class="btn btn--dark" href="https://www.hotdoc.com.au/medical-centres/essendon-VIC-3040/sia-essendon-medical-centre/doctors/dr-melanny-ho-3" target="_blank" rel="noopener">Book on HotDoc</a>
+            <a class="btn btn--dark" href="tel:+61393741322">Call the clinic</a>
           </div>
         </div>
         <div class="creds" data-reveal>
@@ -524,8 +521,8 @@
             <a class="phone" href="tel:+61393741322">(03) 9374 1322</a>
           </div>
           <div class="visit-card" data-reveal>
-            <div class="eyebrow eyebrow--muted" style="margin-bottom: 12px;">Dr Ho consults</div>
-            <div class="hours-row"><span style="font-weight:600;">Mon, Tue, Wed, Fri</span><span class="on">Consulting</span></div>
+            <div class="eyebrow eyebrow--muted" style="margin-bottom: 12px;">Availability</div>
+            <div class="hours-row"><span style="font-weight:600;">On maternity leave</span><span class="off">Back mid-2027</span></div>
           </div>
         </div>
         <div class="map-frame" data-reveal>
@@ -542,12 +539,12 @@
         <h2 data-reveal>Frequently asked questions</h2>
         <div class="faq-list" id="faqList">
           <div class="faq-item">
-            <button class="faq-q" aria-expanded="false"><span>Which days is Dr Melanny Ho available?</span><span class="faq-icon" aria-hidden="true">+</span></button>
-            <div class="faq-a"><p>Dr Ho consults on Mondays, Tuesdays, Wednesdays and Fridays at SIA Medical Centre Essendon. Availability for each day is shown live when you book through HotDoc.</p></div>
+            <button class="faq-q" aria-expanded="false"><span>Is Dr Melanny Ho currently available?</span><span class="faq-icon" aria-hidden="true">+</span></button>
+            <div class="faq-a"><p>Dr Ho is on maternity leave from November 2026 and expects to return before mid-2027. In the meantime, SIA Medical Centre Essendon can arrange care with another doctor — please call the clinic on (03) 9374 1322.</p></div>
           </div>
           <div class="faq-item">
             <button class="faq-q" aria-expanded="false"><span>How do I book an appointment?</span><span class="faq-icon" aria-hidden="true">+</span></button>
-            <div class="faq-a"><p>Bookings are made online through HotDoc — the fastest way to see live availability. You can also phone the clinic on (03) 9374 1322 if you'd prefer to speak with reception.</p></div>
+            <div class="faq-a"><p>While Dr Ho is on leave, appointments with other doctors at SIA Medical Centre Essendon can be booked through HotDoc or by calling the clinic on (03) 9374 1322.</p></div>
           </div>
           <div class="faq-item">
             <button class="faq-q" aria-expanded="false"><span>What qualifications does Dr Melanny Ho hold?</span><span class="faq-icon" aria-hidden="true">+</span></button>
@@ -567,10 +564,10 @@
     <div class="wrap">
       <div class="cta-row">
         <div>
-          <h2 data-reveal>Book your appointment</h2>
-          <p class="cta-lead" data-reveal>Appointments are managed through HotDoc. Mention if you need a longer consultation.</p>
+          <h2 data-reveal>Need an appointment?</h2>
+          <p class="cta-lead" data-reveal>Dr Ho is on maternity leave until mid-2027. SIA Medical Centre Essendon can arrange care with another doctor — call the clinic to book.</p>
         </div>
-        <a class="btn btn--cta" data-reveal href="https://www.hotdoc.com.au/medical-centres/essendon-VIC-3040/sia-essendon-medical-centre/doctors/dr-melanny-ho-3" target="_blank" rel="noopener">Book on HotDoc →</a>
+        <a class="btn btn--cta" data-reveal href="tel:+61393741322">Call the clinic</a>
       </div>
       <div class="footer-line">
         <span>Dr Melanny Ho · MBBS (Hons), FRACGP, Dip. Child Health</span>
@@ -601,11 +598,19 @@
 (function () {
   "use strict";
 
-  /* ---------- live clinic status (ported from the design's status()) ---------- */
+  /* ---------- clinic status ---------- */
+  // Dr Ho is on maternity leave (from Nov 2026, expected back before mid-2027).
+  // Set ON_LEAVE back to false to restore the live "consulting today" indicator.
+  var ON_LEAVE = true;
   function updateStatus() {
     var dot = document.getElementById("statusDot");
     var label = document.getElementById("statusText");
     if (!dot || !label) return;
+    if (ON_LEAVE) {
+      dot.style.background = "#D9A441";
+      label.textContent = "On maternity leave · back mid-2027";
+      return;
+    }
     var now = new Date();
     var day = now.getDay();
     var h = now.getHours();
